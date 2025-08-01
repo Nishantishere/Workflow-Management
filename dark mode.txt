@@ -1,0 +1,1044 @@
+<div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox">
+            <div class="slider round">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </label>
+    </div>
+
+
+
+    /* Default Light Theme
+:root {
+    --primary-bg: #ffffff;
+    --secondary-bg: #393333;
+    --text-color: #ffffff;
+    --shadow: rgba(30, 30, 30, 0.422);
+}
+
+/* Dark Theme *
+[data-theme="dark"] {
+    --primary-bg: #1c1c1c;
+    --secondary-bg: #252525;
+    --text-color: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+ */
+
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+    position: fixed;
+    right: 40px;
+    bottom: 15px;
+    z-index: 1001;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    border-radius: 50%;
+}
+
+.slider i {
+    color: #ffffff;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: .4s;
+}
+
+.fa-sun {
+    right: 10px;
+}
+
+.fa-moon {
+    left: 10px;
+}
+
+input:checked + .slider {
+    background-color: #313231;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+// Dark Mode Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleSwitch = document.querySelector('#checkbox');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    // Switch theme based on checkbox state
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // Add event listener to the checkbox for theme switch
+    toggleSwitch.addEventListener('change', switchTheme);
+});
+
+
+
+Old Dashboard
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-6">
+
+        <!-- Title and Welcome Message -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-semibold text-blue-600">Dashboard</h2>
+            <p id="welcome-message" class="text-lg text-gray-600 mt-2"></p>
+        </div>
+
+        <!-- Admin Actions Section -->
+        <div id="admin-actions" class="space-y-6" style="display: none;">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Assign Task</h3>
+                <input type="text" id="task" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter task">
+                <button onclick="assignTask()" class="mt-4 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-300">Assign Task</button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Registered Users</h3>
+                <ul id="user-list" class="list-disc pl-6 text-gray-700"></ul>
+            </div>
+        </div>
+
+        <!-- User Tasks Section -->
+        <div id="user-tasks" class="space-y-6" style="display: none;">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Your Tasks</h3>
+                <ul id="task-list" class="list-disc pl-6 text-gray-700"></ul>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="mt-8 flex justify-center">
+            <button onclick="handleLogout()" class="bg-red-500 text-white py-3 px-6 rounded-md hover:bg-red-600 transition duration-300">
+                Logout
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox">
+            <div class="slider round">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </label>
+    </div>
+
+
+    <script src="scripts/dashboard.js" defer></script>
+</body>
+</html>
+
+
+CSS- 
+/* Default Light Theme */
+:root {
+    --primary-bg: #f5f5ef;
+    --secondary-bg: #393333;
+    --text-color: #000000;
+    --shadow: rgba(30, 30, 30, 0.422);
+}
+
+/* Dark Theme  */
+[data-theme="dark"] {
+    --primary-bg: #091227;
+    --secondary-bg: #252525;
+    --text-color: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+    position: fixed;
+    right: 40px;
+    bottom: 15px;
+    z-index: 1001;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    border-radius: 50%;
+}
+
+.slider i {
+    color: #ffffff;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: .4s;
+}
+
+.fa-sun {
+    right: 10px;
+}
+
+.fa-moon {
+    left: 10px;
+}
+
+input:checked + .slider {
+    background-color: #313231;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+Js-
+window.onload = function() {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const currentUser = localStorage.getItem("userEmail");
+    const role = localStorage.getItem("role");
+
+    if (!currentUser) {
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("welcome-message").innerText = `Welcome, ${currentUser}`;
+
+    if (role === "admin") {
+        document.getElementById("admin-actions").style.display = "block";
+        const userList = document.getElementById("user-list");
+        users.forEach(user => {
+            if (user.role !== "admin") {
+                let li = document.createElement("li");
+                li.innerText = user.email;
+                userList.appendChild(li);
+            }
+        });
+    } else {
+        document.getElementById("user-tasks").style.display = "block";
+        displayUserTasks(currentUser);
+    }
+};
+
+function assignTask() {
+    const taskText = document.getElementById("task").value;
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (!taskText) {
+        alert("Please enter a task.");
+        return;
+    }
+
+    const userEmail = prompt("Enter the user email to assign task:");
+    const userIndex = users.findIndex(user => user.email === userEmail);
+
+    if (userIndex === -1) {
+        alert("User not found!");
+        return;
+    }
+
+    users[userIndex].tasks.push(taskText);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert(`Task assigned to ${userEmail}`);
+}
+
+function displayUserTasks(email) {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(user => user.email === email);
+
+    if (user && user.tasks.length > 0) {
+        const taskList = document.getElementById("task-list");
+        user.tasks.forEach(task => {
+            let li = document.createElement("li");
+            li.innerText = task;
+            taskList.appendChild(li);
+        });
+    } else {
+        document.getElementById("task-list").innerHTML = "<p>No tasks assigned yet.</p>";
+    }
+}
+
+function handleLogout() {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("role");
+    window.location.href = "login.html";
+}
+
+function logout() {
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
+}
+
+
+
+// Dark Mode Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleSwitch = document.querySelector('#checkbox');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    // Switch theme based on checkbox state
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // Add event listener to the checkbox for theme switch
+    toggleSwitch.addEventListener('change', switchTheme);
+});
+
+
+old code of register 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles/register.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+
+        <!-- Left Section: Registration Form -->
+        <div class="flex-1 flex items-center justify-center bg-white p-8 LeftSection">
+            <div class="w-full max-w-sm">
+                <h2 class="text-4xl lg:text-6xl font-bold text-center mb-6 select-none">Sign Up</h2>
+                
+                <!-- Registration Form -->
+                <form id="register-form" class="space-y-4" onsubmit="event.preventDefault(); handleRegister();">
+                    
+                    <!-- Name Field -->
+                    <div>
+                        <input type="text" id="name" placeholder="Full Name" required
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
+    
+                    <!-- Email Field -->
+                    <div>
+                        <input type="email" id="email" placeholder="Email" required
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
+    
+                    <!-- Password Field -->
+                    <div>
+                        <input type="password" id="password" placeholder="Password" required
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
+    
+                    <!-- Role Selection -->
+                    <div class="flex gap-6 justify-center mt-4">
+                        <!-- Admin -->
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="role" value="admin" required class="hidden" id="adminRadio">
+                            <div id="adminIndicator" class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center transition-all">
+                                <div class="w-2.5 h-2.5 bg-transparent rounded-full"></div>
+                            </div>
+                            <span id="adminText" class="ml-2 text-gray-700 font-medium">Admin</span>
+                        </label>
+    
+                        <!-- User -->
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="role" value="user" required class="hidden" id="userRadio">
+                            <div id="userIndicator" class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center transition-all">
+                                <div class="w-2.5 h-2.5 bg-transparent rounded-full"></div>
+                            </div>
+                            <span id="userText" class="ml-2 text-gray-700 font-medium">User</span>
+                        </label>
+                    </div>
+    
+                    <!-- Message -->
+                    <p class="text-sm text-gray-600">Already have an account? <a href="login.html" class="text-blue-500 hover:underline">Login</a></p>
+                    
+                    <!-- Submit Button -->
+                    <div>
+                        <input type="submit" value="Register"
+                            class="w-full py-3 bg-blue-500 text-white font-semibold rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Right Section: Image & Welcome -->
+        <div class="RightSection flex-1 relative bg-blue-500 text-white">
+            <!-- Welcome Text -->
+            <div class="absolute select-none top-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-60 text-4xl lg:text-6xl font-semibold z-10">
+                Join Us!
+            </div>
+            <div class="absolute select-none top-20  left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-60 text-lg lg:text-xl font-medium z-10">
+                Your journey starts here!
+            </div>
+            
+            <!-- Full Image Background -->
+            <img src="./img/bgSubscription.jpg" alt="Welcome Image" class="w-full h-full object-cover"/>
+        </div>
+    </div>
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox">
+            <div class="slider round">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </label>
+    </div>
+
+
+    <script src="scripts/register.js"></script>
+</body>
+</html>
+
+/* Default Light Theme */
+:root {
+    --primary-bg: #f5f5ef;
+    --secondary-bg: #393333;
+    --text-color: #000000;
+    --shadow: rgba(30, 30, 30, 0.422);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-bg: #091227;
+    --secondary-bg: #252525;
+    --text-color: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+.LeftSection {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+}
+
+#message {
+    color: var(--text-color);
+}
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+    position: fixed;
+    right: 40px;
+    bottom: 15px;
+    z-index: 1001;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    border-radius: 50%;
+}
+
+.slider i {
+    color: #ffffff;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: .4s;
+}
+
+.fa-sun {
+    right: 10px;
+}
+
+.fa-moon {
+    left: 10px;
+}
+
+input:checked + .slider {
+    background-color: #313231;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+function handleRegister() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let role = document.querySelector('input[name="role"]:checked').value;
+
+    if (!name || !email || !password || !role) {
+        alert("Please fill in all fields!");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if email already exists
+    let userExists = users.some(user => user.email === email);
+    if (userExists) {
+        alert("User with this email already exists!");
+        return;
+    }
+
+    users.push({ name, email, password, role });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful! You can now log in.");
+    window.location.href = "login.html"; // Redirect to login page
+}
+
+
+// Dark Mode Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleSwitch = document.querySelector('#checkbox');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    toggleSwitch.addEventListener('change', switchTheme);
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const adminRadio = document.getElementById("adminRadio");
+    const userRadio = document.getElementById("userRadio");
+
+    const adminIndicator = document.getElementById("adminIndicator");
+    const userIndicator = document.getElementById("userIndicator");
+
+    const adminText = document.getElementById("adminText");
+    const userText = document.getElementById("userText");
+
+    function updateRadioSelection() {
+        if (adminRadio.checked) {
+            adminIndicator.classList.add("border-blue-500", "ring-2", "ring-blue-300");
+            adminIndicator.firstElementChild.classList.add("bg-blue-500");
+            adminText.classList.add("text-blue-600");
+
+            userIndicator.classList.remove("border-green-500", "ring-2", "ring-green-300");
+            userIndicator.firstElementChild.classList.remove("bg-green-500");
+            userText.classList.remove("text-green-600");
+        } else if (userRadio.checked) {
+            userIndicator.classList.add("border-green-500", "ring-2", "ring-green-300");
+            userIndicator.firstElementChild.classList.add("bg-green-500");
+            userText.classList.add("text-green-600");
+
+            adminIndicator.classList.remove("border-blue-500", "ring-2", "ring-blue-300");
+            adminIndicator.firstElementChild.classList.remove("bg-blue-500");
+            adminText.classList.remove("text-blue-600");
+        }
+    }
+
+    adminRadio.addEventListener("change", updateRadioSelection);
+    userRadio.addEventListener("change", updateRadioSelection);
+});
+
+
+Login 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex min-h-screen">
+
+        <!-- Left Section: Login Form -->
+        <div class="LeftSection flex-1 flex items-center justify-center bg-white p-8">
+            <div class="Box w-full max-w-sm">
+                <h2 class="text-6xl font-bold text-center mb-6 select-none">Login</h2>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4" onsubmit="event.preventDefault(); handleLogin();">
+                    
+                    <!-- Email Field -->
+                    <div>
+                        <input type="text" id="email" placeholder="Email" required
+                            class="text-black w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <input type="password" id="password" placeholder="Password" required
+                            class="text-black w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    </div>
+
+                    <!-- Role Selection (User/Admin) -->
+                    <div class="flex gap-6 justify-center mt-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="role" value="admin" required class="mr-2"> Admin
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="role" value="user" required class="mr-2"> User
+                        </label>
+                    </div>
+                    
+                    <!-- Error Message -->
+                    <p id="message" class="text-base text-red-800 stroke-cyan-500"></p>
+
+                    <!-- Message -->
+                    <p class="text-sm">Don't have an account? <a href="register.html" class="text-blue-500">Register</a></p>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <input type="submit" value="Login"
+                            class="w-full py-3 bg-blue-500 text-white font-semibold rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Section: Welcome Message + Image -->
+        <div class="RightSection flex-1 relative bg-blue-500 text-white">
+            <!-- Welcome Text -->
+            <div class="absolute select-none top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-60 text-6xl font-semibold z-10">
+                Welcome
+            </div>
+            
+            <!-- Full Image Background -->
+            <img src="./img/bgSubscription.jpg" alt="Welcome Image" class="w-full h-full object-cover"/>
+        </div>
+    
+    </div>
+    <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox">
+                <div class="slider round">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </label>
+        </div>
+
+
+    <script src="scripts/login.js"></script>
+</body>
+</html>
+
+ /* Default Light Theme */
+:root {
+    --primary-bg: #f5f5ef;
+    --secondary-bg: #393333;
+    --text-color: #000000;
+    --shadow: rgba(30, 30, 30, 0.422);
+}
+
+/* Dark Theme  */
+[data-theme="dark"] {
+    --primary-bg: #091227;
+    --secondary-bg: #252525;
+    --text-color: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+.LeftSection{
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+
+}
+
+#message{
+    color: var(--text-color);
+}
+
+
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+    position: fixed;
+    right: 40px;
+    bottom: 15px;
+    z-index: 1001;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    border-radius: 50%;
+}
+
+.slider i {
+    color: #ffffff;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    transition: .4s;
+}
+
+.fa-sun {
+    right: 10px;
+}
+
+.fa-moon {
+    left: 10px;
+}
+
+input:checked + .slider {
+    background-color: #313231;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+function handleLogin() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const selectedRole = document.querySelector('input[name="role"]:checked'); // Get selected role
+
+    // Show error if no role is selected
+    if (!selectedRole) {
+        document.getElementById("message").innerText = "Please select a role (Admin/User).";
+        document.getElementById("message").style.color = "red";
+        return;
+    }
+
+    const role = selectedRole.value;
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Admin credentials (can be modified)
+    const adminEmail = "admin@example.com";
+    const adminPassword = "admin123";
+
+    // Check if role is admin
+    if (role === "admin") {
+        // Check if the admin credentials are correct
+        if (email === adminEmail && password === adminPassword) {
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("role", "admin");
+            window.location.href = "dashboard.html";
+        } else {
+            document.getElementById("message").innerText = "Invalid admin credentials!";
+            document.getElementById("message").style.color = "red";
+        }
+        return;
+    }
+
+    // Check for user login
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (user) {
+        localStorage.setItem("userEmail", user.email);
+        localStorage.setItem("role", "user");
+        window.location.href = "dashboard.html";
+    } else {
+        document.getElementById("message").innerText = "Invalid credentials!";
+        document.getElementById("message").style.color = "red";
+    }
+}
+
+
+
+// Dark Mode Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleSwitch = document.querySelector('#checkbox');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    // Switch theme based on checkbox state
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // Add event listener to the checkbox for theme switch
+    toggleSwitch.addEventListener('change', switchTheme);
+});
+
+
+working Admin js register
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the toggle buttons for Admin and User
+    const adminToggle = document.getElementById("admin-toggle");
+    const userToggle = document.getElementById("user-toggle");
+
+    // Get the forms for Admin and User
+    const adminForm = document.getElementById("admin-form");
+    const userForm = document.getElementById("user-form");
+
+    // Set initial visibility (both forms hidden initially)
+    adminForm.classList.add("hidden");
+    userForm.classList.add("hidden");
+
+    // Show Admin form when Admin button is clicked
+    adminToggle.addEventListener("click", function() {
+        adminForm.classList.remove("hidden");
+        userForm.classList.add("hidden");
+    });
+
+    // Show User form when User button is clicked
+    userToggle.addEventListener("click", function() {
+        userForm.classList.remove("hidden");
+        adminForm.classList.add("hidden");
+    });
+
+
+
+// Handle Admin Registration
+
+    function handleAdminRegister(event) {
+        event.preventDefault();  // Prevent form submission
+
+        const adminName = document.getElementById("admin-name").value;
+        const adminEmail = document.getElementById("admin-email").value;
+        const adminPassword = document.getElementById("admin-password").value; // Ensure this exists in HTML
+        const adminWorkspaceId = generateWorkspaceId();
+
+        const newAdmin = {
+            name: adminName,
+            email: adminEmail,
+            password: adminPassword,
+            workspaceId: adminWorkspaceId,
+            approvedUsers: [] // No users initially
+        };
+
+        let admins = JSON.parse(localStorage.getItem("admins")) || []; // Fetch existing admins from localStorage
+
+        admins.push(newAdmin); // Add new admin to the array
+
+        // Store the updated admins list in Local Storage
+        localStorage.setItem("admins", JSON.stringify(admins));
+
+        alert("✅ Admin registered successfully. Workspace ID: " + adminWorkspaceId);
+        window.location.href = "login.html";  // Redirect to login page after registration
+    }
+
+    // Generate a random Workspace ID
+    
+    function generateWorkspaceId() {
+        return 'WS' + Math.floor(Math.random() * 10000); // Example for generating workspace ID
+    }
+
+// Handle User Registration
+
+    function handleUserRegister(event) {
+        event.preventDefault();  // Prevent form submission
+    
+        const userName = document.getElementById("user-name").value;
+        const userEmail = document.getElementById("user-email").value;
+        const userPassword = document.getElementById("user-password").value;
+        const userWorkspaceId = document.getElementById("user-workspace-id").value;
+    
+        let admins = JSON.parse(localStorage.getItem("admins")) || [];
+    
+        // Find the admin by workspace ID
+        let admin = admins.find(admin => admin.workspaceId === userWorkspaceId);
+    
+        if (!admin) {
+            alert("❌ Invalid Workspace ID. Please enter a valid one.");
+            return;
+        }
+    
+        // Create new user object
+        let newUser = {
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+            workspaceId: userWorkspaceId,
+            approved: false  // Initially set as not approved by the admin
+        };
+    
+        // Add the new user to the admin's approvedUsers list
+        admin.approvedUsers.push(newUser);
+        localStorage.setItem("admins", JSON.stringify(admins));
+    
+        alert("✅ User registered! Waiting for admin approval.");
+        window.location.href = "login.html"; // Redirect to login page after user registration
+    }
+    
+    
+
+    // Attach event listeners to form submit buttons
+    document.getElementById("admin-form").addEventListener("submit", handleAdminRegister);
+    document.getElementById("user-form").addEventListener("submit", handleUserRegister);
+});
